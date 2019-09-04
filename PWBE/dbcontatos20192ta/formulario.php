@@ -165,6 +165,12 @@ $conexao = conexaoMysql();
                         type="tel"
                         type="number"
                         type="range"
+                        type="date"
+                        type="month"
+                        type="week"
+                        type="url"
+                        type="password"
+                        type="color"
                     -->
                     <form name="frm-contatos" method="post" action="bd/inserir.php">
                         <div class="itens_formulario">
