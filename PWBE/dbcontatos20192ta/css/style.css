@@ -131,6 +131,6 @@ textarea{
     margin-right: 5px;
 }
 .campo-item div img{
-    width: inherit;
-    height: inherit;
+    width: 25px;
+    height: 25px;
 }

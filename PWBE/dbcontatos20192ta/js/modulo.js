@@ -40,10 +40,10 @@ function mascaraFone(obj,caracter){
         if(input.length == 0){
             resultado = "(";
         }else if(input.length == 4){
-            resultado += ") ";
-        }else if(input.length == 10){
-            resultado += " - ";
-        }else if(input.length == 17){
+            resultado += ")";
+        }else if(input.length == 9){
+            resultado += "-";
+        }else if(input.length == 14){
             return false;
         }
 

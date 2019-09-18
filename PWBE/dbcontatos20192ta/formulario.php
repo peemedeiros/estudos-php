@@ -4,6 +4,26 @@ require_once('bd/conexao.php');
 
 //chamada para a function de conexão com o Mysql
 $conexao = conexaoMysql();
+/*valida se existe a variavel modo*/
+if(isset($_GET['modo'])){
+    /*valida se modo é editar*/
+    if($_GET['modo']=='editar'){
+
+        $codigo = $_GET['codigo'];
+
+        $selecionar = "select * from tblcontatos where codigo=".$codigo;
+        
+        $select = mysqli_query($conexao, $selecionar);
+        
+        if($rsConsulta = mysqli_fetch_array($select)){
+            
+            $nome = $rsConsulta['nome'];
+            $telefone = $rsConsulta['telefone'];
+            
+        }
+
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -53,7 +73,7 @@ $conexao = conexaoMysql();
                                 NOME:
                             </div>
                             <div class="campo-formulario">
-                                <input type="text" value="" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
+                                <input type="text" value="<?=$nome?>" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
                             </div>
                         </div>
                         <div class="itens_formulario">
@@ -61,7 +81,7 @@ $conexao = conexaoMysql();
                                 TELEFONE:
                             </div>
                             <div class="campo-formulario">
-                                <input id="telefone" type="text" value="" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
+                                <input id="telefone" type="text" value="<?=$telefone?>" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
                             </div>
 
                         </div>
@@ -119,32 +139,65 @@ $conexao = conexaoMysql();
                 </div>
                 <div class="tabela">
                     <h1 class="tabela-titulo"> consulta de contatos</h1>
+                    <?php
+                                $sql = "select * from tblcontatos";
+                                $delete = "delete";
+                                $editar = "editar";
+                            
+                                $select = mysqli_query($conexao, $sql);
+                            
+                                while($rsContatos = mysqli_fetch_array($select)){
+                            
+                          /*  
+                            Exemplos de funções que convertem a resposta do banco de dados em um formato de dados para manipulação
+                            
+                                mysqli_fetch_array()
+                                mysqli_fetch_assoc()
+                                mysqli_fetch_object()*/
+                                
+                            
+                    ?>
                     <div class="campo-linha">
                         <div class="campo-tabela">
                             <h4>nome</h4>
-                            <div class="campo-item"></div>
+                            <div class="campo-item">
+                                <?=$rsContatos['nome']?>
+                            </div>
                         </div>
                         <div class="campo-tabela">
                              <h4>telefone</h4>
-                            <div class="campo-item"></div>
+                            <div class="campo-item">
+                                <?=$rsContatos['telefone']?>
+                            </div>
                         </div>
                         <div class="campo-tabela">
                              <h4>Celular</h4>
-                            <div class="campo-item"></div>
+                            <div class="campo-item"><?=$rsContatos['celular']?></div>
                         </div>
                         <div class="campo-tabela">
                              <h4>Email</h4>
-                            <div class="campo-item"></div>
+                            <div class="campo-item"><?=$rsContatos['email']?></div>
                         </div>
                         <div class="campo-tabela">
                              <h4>Opções</h4>
                             <div class="campo-item">
                                 <div> <img src="img/lupa.png"></div>
-                                <div><img src="img/checkbox-pen-outline.png"></div>
-                                <div> <img src="img/cancelar.png"></div>
+                                <div>
+                                    <a href="formulario.php?modo=editar&codigo=<?=$rsContatos['codigo']?>">
+                                        <img src="img/checkbox-pen-outline.png">
+                                    </a>
+                                </div>
+                                <div>
+                                    <a onclick="return confirm('Deseja realmente excluir esse registro')" href="bd/deletar.php?modo=excluir&codigo=<?=$rsContatos['codigo']?>">
+                                        <img src="img/cancelar.png">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <?php
+                                }
+                    ?>
                 </div>
             </div>
         </div>
