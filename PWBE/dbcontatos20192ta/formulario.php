@@ -1,4 +1,8 @@
 <?php
+
+$chkFeminino = (String) "";
+$chkMasculino = (String) "";
+$botao = (String) "inserir";
 //importa o arquivo de conexão
 require_once('bd/conexao.php');
 require_once('bd/inserir.php');
@@ -20,6 +24,18 @@ if(isset($_GET['modo'])){
             
             $nome = $rsConsulta['nome'];
             $telefone = $rsConsulta['telefone'];
+            $celular = $rsConsulta['celular'];
+            $email = $rsConsulta['email'];
+            $data_nascimento = explode("-",$rsConsulta['dt_nasc']);
+            $data_nascimento = $data_nascimento[2]."/".$data_nascimento[1]."/".$data_nascimento[0];
+            $sexo = $rsConsulta['sexo'];
+            if($sexo == "F"){
+                $chkFeminino = "checked";
+            }else if($sexo == "M"){
+                $chkMasculino = "checked";
+            }
+            $obs = $rsConsulta['obs'];
+            $botao = "Editar"
             
         }
 
@@ -68,13 +84,17 @@ if(isset($_GET['modo'])){
                     
                     [[a-z\s]+$]
                     -->
-                    <form name="frm-contatos" method="post" action="bd/inserir.php">
+                    <form name="frm-contatos" method="post" action="bd/salvar.php">
                         <div class="itens_formulario">
                             <div class="titulo-item-formulario">
                                 NOME:
                             </div>
                             <div class="campo-formulario">
+<<<<<<< HEAD
                                 <input type="text" value="" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
+=======
+                                <input type="text" value="<?=@$nome?>" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
+>>>>>>> 934e7618116cb7bc37c8622cf35cf2add278ae35
                             </div>
                         </div>
                         <div class="itens_formulario">
@@ -82,7 +102,11 @@ if(isset($_GET['modo'])){
                                 TELEFONE:
                             </div>
                             <div class="campo-formulario">
+<<<<<<< HEAD
                                 <input id="telefone" type="text" value="" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
+=======
+                                <input id="telefone" type="text" value="<?=@$telefone?>" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
+>>>>>>> 934e7618116cb7bc37c8622cf35cf2add278ae35
                             </div>
 
                         </div>
@@ -91,7 +115,7 @@ if(isset($_GET['modo'])){
                                 CELULAR:
                             </div>
                             <div class="campo-formulario">
-                                <input type="text" value="" name="txt-celular" required>
+                                <input type="text" value="<?=@$celular?>" name="txt-celular" required>
                             </div>
                         </div>
                         <div class="itens_formulario">
@@ -99,7 +123,7 @@ if(isset($_GET['modo'])){
                                 EMAIL:
                             </div>
                             <div class="campo-formulario">
-                                <input type="email" value="" name="txt-email" required>
+                                <input type="email" value="<?=@$email?>" name="txt-email" required>
                             </div>
                         </div>
                         <div class="itens_formulario">
@@ -107,7 +131,7 @@ if(isset($_GET['modo'])){
                                 DATA NASCIMENTO:
                             </div>
                             <div class="campo-formulario">
-                                <input type="text" value="" name="txt-data-nascimento" required>
+                                <input type="text" value="<?=@$data_nascimento?>" name="txt-data-nascimento" required>
                             </div>
                         </div>
                         <div class="itens_formulario">
@@ -115,8 +139,9 @@ if(isset($_GET['modo'])){
                                 SEXO:
                             </div>
                             <div class="campo-formulario">
-                                <input class="radio" type="radio" value="F" name="rd-opcoes" required> feminino
-                                <input class="radio" type="radio" value="M" name="rd-opcoes" required>masculino
+                                <input class="radio" type="radio" value="F" name="rd-opcoes" required <?=$chkFeminino?>>Feminino
+                                
+                                <input class="radio" type="radio" value="M" name="rd-opcoes" required <?=$chkMasculino?>>Masculino
                             </div>
                         </div>
                         <div class="itens_formulario-obs">
@@ -124,12 +149,12 @@ if(isset($_GET['modo'])){
                                 OBS:
                             </div>
                             <div class="campo-formulario-obs">
-                                <textarea name="txt-obs" required></textarea>
+                                <textarea name="txt-obs" required><?=@$obs?></textarea>
                             </div>
 
                         </div>
                         <div class="itens_formulario-botoes">
-                            <input class="botao" type="submit" value=" Salvar" name="btn-salvar">
+                            <input class="botao" type="submit" value="<?=$botao?>" name="btn-salvar">
                             <input type="submit" value=" Limpar" name="btn-limpar">
                         </div>
                     </form>
