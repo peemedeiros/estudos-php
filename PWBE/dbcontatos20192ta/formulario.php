@@ -3,9 +3,9 @@
 $chkFeminino = (String) "";
 $chkMasculino = (String) "";
 $botao = (String) "inserir";
+
 //importa o arquivo de conexão
 require_once('bd/conexao.php');
-require_once('bd/inserir.php');
 
 //chamada para a function de conexão com o Mysql
 $conexao = conexaoMysql();
@@ -35,10 +35,21 @@ if(isset($_GET['modo'])){
                 $chkMasculino = "checked";
             }
             $obs = $rsConsulta['obs'];
-            $botao = "Editar"
+            $botao = "editar";
+			
+			if($botao == "inserir"){
+				$sql = "
+                insert into tblcontatos (nome,telefone,celular,
+                email,dt_nasc,sexo,obs)
+                values('".$nome."','".$telefone."','".$celular."',
+                '".$email."','".$data_nascimento."','".$sexo."',
+                '".$obs."')
+                ";
+			}elseif ($botao == "editar"){
+				$sql = "update tblcontatos set nome ='".$nome."','telefone ='".$telefone."','celular='".$celular."',email='".$email."','dt_nasc='".$data_nascimento."',sexo='".$sexo."'obs='".$obs."'";
+			}
             
         }
-
     }
 }
 
@@ -90,11 +101,9 @@ if(isset($_GET['modo'])){
                                 NOME:
                             </div>
                             <div class="campo-formulario">
-<<<<<<< HEAD
-                                <input type="text" value="" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
-=======
+								
                                 <input type="text" value="<?=@$nome?>" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
->>>>>>> 934e7618116cb7bc37c8622cf35cf2add278ae35
+								
                             </div>
                         </div>
                         <div class="itens_formulario">
@@ -102,11 +111,9 @@ if(isset($_GET['modo'])){
                                 TELEFONE:
                             </div>
                             <div class="campo-formulario">
-<<<<<<< HEAD
-                                <input id="telefone" type="text" value="" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
-=======
+								
                                 <input id="telefone" type="text" value="<?=@$telefone?>" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
->>>>>>> 934e7618116cb7bc37c8622cf35cf2add278ae35
+								
                             </div>
 
                         </div>
