@@ -1,6 +1,7 @@
 <?php
 //importa o arquivo de conexão
 require_once('bd/conexao.php');
+require_once('bd/inserir.php');
 
 //chamada para a function de conexão com o Mysql
 $conexao = conexaoMysql();
@@ -73,7 +74,7 @@ if(isset($_GET['modo'])){
                                 NOME:
                             </div>
                             <div class="campo-formulario">
-                                <input type="text" value="<?=$nome?>" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
+                                <input type="text" value="" name="txt-nome" placeholder="Digite seu nome" onkeypress="return validarEntrada(event,'numeric');" required >
                             </div>
                         </div>
                         <div class="itens_formulario">
@@ -81,7 +82,7 @@ if(isset($_GET['modo'])){
                                 TELEFONE:
                             </div>
                             <div class="campo-formulario">
-                                <input id="telefone" type="text" value="<?=$telefone?>" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
+                                <input id="telefone" type="text" value="" name="txt-telefone" placeholder="0xx 4002-8922" onkeypress="return mascaraFone(this,event);" required>
                             </div>
 
                         </div>

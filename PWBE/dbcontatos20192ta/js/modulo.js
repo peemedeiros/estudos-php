@@ -4,7 +4,7 @@ function validarEntrada(caracter,typeBlock){
     //Serve para padronizar a conversão em ascii em todas as versões de navegadores.
     //Os que são baseados em janela ou não
     
-    var tipo = typeBlock;
+    let tipo = typeBlock;
     
     if(window.event){
         var asc = caracter.charCode;
@@ -30,13 +30,29 @@ function validarEntrada(caracter,typeBlock){
 
 function mascaraFone(obj,caracter){
    
+	var input = obj.value;
+	var id = obj.id;
+	var cel = obj.name;
+	var resultado = input;
+	
     if(validarEntrada(caracter, "string") == false){
         return false;
-    }else{
-        var input = obj.value;
-        var id = obj.id;
-        var resultado = input;
+    }else if(cel == "txt-celular"){
+		
+		if(input.length == 0){
+            resultado = "/";
+        }else if(input.length == 4){
+            resultado += ")";
+        }else if(input.length == 10){
+            resultado += "-";
+        }else if(input.length == 15){
+            return false;
+        }
 
+        document.getElementById(id).value = resultado;
+		
+	}else{
+			 
         if(input.length == 0){
             resultado = "(";
         }else if(input.length == 4){
