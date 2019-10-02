@@ -1,7 +1,16 @@
 <?php
 
-// Ativa o recurso de variaveis de sessão no servidor
-session_start();
+// Ativa o recurso de variaveis de sessão no servidor;
+if(!isset($_SESSION))
+    session_start();
+
+
+    // $_SESSION['NOME'] => para criar uma variavel de sessão;
+
+    // unset($_SESSION['NOME']) => para apagar uma variavel de sessão do servidor
+    // o unset pode ser usado quando o usuario faz o log out, por exemplo;
+
+    // session_destroy() => para eliminar todas as variaveis de sessão do sistema automaticamente;
 
 $chkFeminino = (String) "";
 $chkMasculino = (String) "";
@@ -56,9 +65,44 @@ if(isset($_GET['modo'])){
         </title>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/jquery.js"></script>
         <script src="js/modulo.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                //function para abrir a modal
+                $('.visualizar').click(function(){
+                    $('#container').fadeIn(1000);
+                });
+            });
+
+            function visualizarDados(idItem){
+                $.ajax({
+                    type: "POST",
+                    url: "",
+                    data: {
+                        modo:'visualizar',
+                        codigo: idItem
+                    },
+                    success: function(dados){
+                        $('#modal').html(dados);
+                    }
+                });
+            }
+        </script>
     </head>
     <body>
+
+    <!-- Construir a modal que irá receber os dados de outro arquivo,
+    através do JavaScript -->
+    <div id="container">
+        <div id="modal">
+            <span>
+                Fechar
+            </span>
+        </div>  
+    </div>
+
         <div class="caixa-principal">
             <div class="conteudo center">
                 <div class="formulario center">
@@ -208,7 +252,9 @@ if(isset($_GET['modo'])){
                         <div class="campo-tabela">
                              <h4>Opções</h4>
                             <div class="campo-item">
-                                <div> <img src="img/lupa.png"></div>
+                                <div> 
+                                    <img src="img/lupa.png" class="visualizar" onclick="visualizarDados(<?=$rsContatos['codigo']?>);">
+                                </div>
                                 <div>
                                     <a href="formulario.php?modo=editar&codigo=<?=$rsContatos['codigo']?>">
                                         <img src="img/checkbox-pen-outline.png">
