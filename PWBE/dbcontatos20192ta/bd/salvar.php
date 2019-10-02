@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     //verifica se houve um $_post
     if(isset($_POST['btn-salvar'])){
         //importa o arquivo de conexao;
@@ -21,15 +23,26 @@
 		
         $sexo = $_POST['rd-opcoes'];
         $obs = $_POST['txt-obs'];
-        
-        $sql = "
+
+        // verifica se o o botão esta retornando a palavra INSERIR
+
+        if( strtoupper($_POST['btn-salvar']) == "INSERIR"){
+            $sql = "
                 insert into tblcontatos (nome,telefone,celular,
                 email,dt_nasc,sexo,obs)
                 values('".$nome."','".$telefone."','".$celular."',
                 '".$email."','".$data_nascimento."','".$sexo."',
                 '".$obs."')
                 ";
-        
+        } else if( strtoupper($_POST['btn-salvar']) == "EDITAR" ){
+            $sql = "update tblcontatos set
+                nome ='".$nome."',telefone ='".$telefone."',
+                celular='".$celular."',email='".$email."',
+                dt_nasc='".$data_nascimento."',sexo='".$sexo."',
+                obs='".$obs."' where codigo =".$_SESSION['codigo'];
+        }
+        // echo($sql);
+
         //Executa um script no banco de dados (se o script der certo iremos redirecionar para a página de cadastro, se não mostrar mensagem de erro)
 		
         if(mysqli_query($conexao, $sql))

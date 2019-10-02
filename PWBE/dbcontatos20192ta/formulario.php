@@ -1,5 +1,8 @@
 <?php
 
+// Ativa o recurso de variaveis de sessão no servidor
+session_start();
+
 $chkFeminino = (String) "";
 $chkMasculino = (String) "";
 $botao = (String) "inserir";
@@ -15,6 +18,9 @@ if(isset($_GET['modo'])){
     if($_GET['modo']=='editar'){
 
         $codigo = $_GET['codigo'];
+
+    // criamos uma variavel de sessão para enviar o código do registro para outra página 
+        $_SESSION['codigo'] = $codigo;
 
         $selecionar = "select * from tblcontatos where codigo=".$codigo;
         
@@ -36,19 +42,7 @@ if(isset($_GET['modo'])){
             }
             $obs = $rsConsulta['obs'];
             $botao = "editar";
-			
-			if($botao == "inserir"){
-				$sql = "
-                insert into tblcontatos (nome,telefone,celular,
-                email,dt_nasc,sexo,obs)
-                values('".$nome."','".$telefone."','".$celular."',
-                '".$email."','".$data_nascimento."','".$sexo."',
-                '".$obs."')
-                ";
-			}elseif ($botao == "editar"){
-				$sql = "update tblcontatos set nome ='".$nome."','telefone ='".$telefone."','celular='".$celular."',email='".$email."','dt_nasc='".$data_nascimento."',sexo='".$sexo."'obs='".$obs."'";
-			}
-            
+
         }
     }
 }
