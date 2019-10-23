@@ -15,7 +15,7 @@ body{
 }
 .caixa-principal{
     width: 100%;
-    height: 720px
+    height: 815px
 
 }
 .conteudo{
@@ -99,7 +99,7 @@ textarea{
     margin-right: 50px;
 }
 .tabela{
-    width:1150px;
+    width:1385px;
     height: auto;
     min-height: 150px;
     box-shadow: 8px 8px 15px #999;
@@ -151,5 +151,7 @@ textarea{
     margin-left: auto;
     margin-right: auto;
     margin-top: 20vh;
-
+}
+.visualizar:hover{
+    cursor: pointer;
 }

@@ -15,6 +15,8 @@ if(!isset($_SESSION))
 $chkFeminino = (String) "";
 $chkMasculino = (String) "";
 $botao = (String) "inserir";
+$codEstado = (int) 0;
+$siglaEstado = (String) "";
 
 //importa o arquivo de conexão
 require_once('bd/conexao.php');
@@ -31,7 +33,8 @@ if(isset($_GET['modo'])){
     // criamos uma variavel de sessão para enviar o código do registro para outra página 
         $_SESSION['codigo'] = $codigo;
 
-        $selecionar = "select * from tblcontatos where codigo=".$codigo;
+        $selecionar = "select tblcontatos.*, tblestado.sigla 
+        from tblcontatos inner join tblestado on tblestado.codigo = tblcontatos.codestado where tblcontatos.codigo = ".$codigo;
         
         $select = mysqli_query($conexao, $selecionar);
         
@@ -41,6 +44,10 @@ if(isset($_GET['modo'])){
             $telefone = $rsConsulta['telefone'];
             $celular = $rsConsulta['celular'];
             $email = $rsConsulta['email'];
+
+            $codEstado = $rsConsulta['codestado'];
+            $siglaEstado = $rsConsulta['sigla'];
+
             $data_nascimento = explode("-",$rsConsulta['dt_nasc']);
             $data_nascimento = $data_nascimento[2]."/".$data_nascimento[1]."/".$data_nascimento[0];
             $sexo = $rsConsulta['sexo'];
@@ -74,18 +81,22 @@ if(isset($_GET['modo'])){
                 $('.visualizar').click(function(){
                     $('#container').fadeIn(1000);
                 });
-            });
 
+                $('#fechar').click(function(){
+                    $('#container').fadeOut(1000);
+                });
+            });
+            //função para carregar os dados na modal
             function visualizarDados(idItem){
                 $.ajax({
                     type: "POST",
-                    url: "",
+                    url: "modalContatos.php",
                     data: {
                         modo:'visualizar',
                         codigo: idItem
                     },
                     success: function(dados){
-                        $('#modal').html(dados);
+                        $('#modalDados').html(dados);
                     }
                 });
             }
@@ -97,9 +108,8 @@ if(isset($_GET['modo'])){
     através do JavaScript -->
     <div id="container">
         <div id="modal">
-            <span>
-                Fechar
-            </span>
+            <div id="fechar">Fechar</div>
+            <div id="modalDados"></div>
         </div>  
     </div>
 
@@ -173,6 +183,42 @@ if(isset($_GET['modo'])){
                         </div>
                         <div class="itens_formulario">
                             <div class="titulo-item-formulario">
+                                ESTADO:
+                            </div>
+                            <div class="campo-formulario">
+                                <select name="sltestados">
+                                <!-- adicionando a tabela de estados para preencher as <options> do <select> com os registros do campo -->
+
+                                    <?php
+                                        if($_GET['modo'] == 'editar'){
+                                    ?>
+
+                                    <option value="<?=$codEstado?>"> <?=$siglaEstado?> </option>
+
+                                    <?php
+                                        }else{
+                                    ?>
+
+                                    <option value="">selecione um estado</option>
+
+                                    <?php
+                                    }
+                                        $sql = "select * from tblestado where codigo <>".$codEstado;
+                                        $select = mysqli_query($conexao, $sql);
+
+                                        while($rsEstados = mysqli_fetch_array($select)){
+                                        ?>
+                                            <option value="<?=$rsEstados['codigo']?>">
+                                                <?=$rsEstados['sigla']?>
+                                            </option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="itens_formulario">
+                            <div class="titulo-item-formulario">
                                 DATA NASCIMENTO:
                             </div>
                             <div class="campo-formulario">
@@ -211,7 +257,9 @@ if(isset($_GET['modo'])){
                 <div class="tabela">
                     <h1 class="tabela-titulo"> consulta de contatos</h1>
                     <?php
-                                $sql = "select * from tblcontatos";
+                                $sql = "select tblcontatos.*, tblestado.sigla, tblestado.descricao 
+                                from tblcontatos inner join tblestado on tblestado.codigo = tblcontatos.codestado";
+
                                 $delete = "delete";
                                 $editar = "editar";
                             
@@ -248,6 +296,10 @@ if(isset($_GET['modo'])){
                         <div class="campo-tabela">
                              <h4>Email</h4>
                             <div class="campo-item"><?=$rsContatos['email']?></div>
+                        </div>
+                        <div class="campo-tabela">
+                             <h4>ESTADO</h4>
+                            <div class="campo-item"><?=$rsContatos['sigla']." - ".$rsContatos['descricao']?></div>
                         </div>
                         <div class="campo-tabela">
                              <h4>Opções</h4>

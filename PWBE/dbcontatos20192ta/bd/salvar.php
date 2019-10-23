@@ -15,6 +15,7 @@
         $telefone = $_POST['txt-telefone'];
         $celular = $_POST['txt-celular'];
         $email = $_POST['txt-email'];
+        $codEstado = $_POST['sltestados'];
 		
         //explode() - percorre uma string de dados , localiza um caracter coringa e quebra em um array de dados cada dado separado
         $data_nascimento = explode("/", $_POST['txt-data-nascimento']);
@@ -30,18 +31,19 @@
         if( strtoupper($_POST['btn-salvar']) == "INSERIR"){
             $sql = "
                 insert into tblcontatos (nome,telefone,celular,
-                email,dt_nasc,sexo,obs)
+                email,dt_nasc,sexo,obs,codestado)
                 values('".$nome."','".$telefone."','".$celular."',
                 '".$email."','".$data_nascimento."','".$sexo."',
-                '".$obs."')
+                '".$obs."', ".$codEstado.")
                 ";
         } else if( strtoupper($_POST['btn-salvar']) == "EDITAR" ){
             $sql = "update tblcontatos set
                 nome ='".$nome."',telefone ='".$telefone."',
                 celular='".$celular."',email='".$email."',
                 dt_nasc='".$data_nascimento."',sexo='".$sexo."',
-                obs='".$obs."' where codigo =".$_SESSION['codigo'];
+                obs='".$obs."',codestado = ".$codEstado." where codigo =".$_SESSION['codigo'];
         }
+        
         // echo($sql);
 
         //Executa um script no banco de dados (se o script der certo iremos redirecionar para a página de cadastro, se não mostrar mensagem de erro)
