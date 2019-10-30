@@ -143,7 +143,16 @@ if(isset($_GET['modo'])){
                     
                     [[a-z\s]+$]
                     -->
-                    <form name="frm-contatos" method="post" action="bd/salvar.php">
+
+
+                    <!--
+                        Para o upload de arquivo funcionar, devemos utilizar as seguintes opções:
+                        method = "POST"
+                        enctype = "multipart/form-data"
+
+                        ENCTYPE serve para informar o 'form' de que agora ele receberá não só dados em escritas, mas ojetos, arquivos, etc.
+                    -->
+                    <form name="frm-contatos" method="post" action="bd/salvar.php" enctype="multipart/form-data">
                         <div class="itens_formulario">
                             <div class="titulo-item-formulario">
                                 NOME:
@@ -179,6 +188,14 @@ if(isset($_GET['modo'])){
                             </div>
                             <div class="campo-formulario">
                                 <input type="email" value="<?=@$email?>" name="txt-email" required>
+                            </div>
+                        </div>
+                        <div class="itens_formulario">
+                            <div class="titulo-item-formulario">
+                                FOTO
+                            </div>
+                            <div class="campo-formulario">
+                                <input type="file" value="" name="fleFoto" accept="image/jpg, image/png">
                             </div>
                         </div>
                         <div class="itens_formulario">
