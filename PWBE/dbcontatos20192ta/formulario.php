@@ -76,6 +76,7 @@ if(isset($_GET['modo'])){
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <script src="js/jquery.js"></script>
+        <script src="js/jquery.form.js"></script>
         <script src="js/modulo.js"></script>
 
         <script>
@@ -155,7 +156,17 @@ if(isset($_GET['modo'])){
 
                         ENCTYPE serve para informar o 'form' de que agora ele receberá não só dados em escritas, mas ojetos, arquivos, etc.
                     -->
-                    <form name="frm-contatos" method="post" action="bd/salvar.php" enctype="multipart/form-data">
+                    <form action="" name="frmFoto" id="formFoto" method="POST" enctype="multipart/form-data">
+                        <div class="itens_formulario">
+                            <div class="titulo-item-formulario">
+                                FOTO
+                            </div>
+                            <div class="campo-formulario">
+                                <input type="file" value="" name="fleFoto" accept="image/jpg, image/png" id="fileFoto">
+                            </div>
+                        </div>
+                    </form>
+                    <form name="frm-contatos" method="post" action="bd/salvar.php" >
                         <div class="itens_formulario">
                             <div class="titulo-item-formulario">
                                 NOME:
@@ -193,14 +204,7 @@ if(isset($_GET['modo'])){
                                 <input type="email" value="<?=@$email?>" name="txt-email" required>
                             </div>
                         </div>
-                        <div class="itens_formulario">
-                            <div class="titulo-item-formulario">
-                                FOTO
-                            </div>
-                            <div class="campo-formulario">
-                                <input type="file" value="" name="fleFoto" accept="image/jpg, image/png">
-                            </div>
-                        </div>
+                        
                         <div class="itens_formulario">
                             <div class="titulo-item-formulario">
                                 ESTADO:
