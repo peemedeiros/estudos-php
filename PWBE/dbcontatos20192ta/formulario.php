@@ -17,6 +17,7 @@ $chkMasculino = (String) "";
 $botao = (String) "inserir";
 $codEstado = (int) 0;
 $siglaEstado = (String) "";
+$nomeFoto = (String) "";
 
 //importa o arquivo de conexão
 require_once('bd/conexao.php');
@@ -57,6 +58,8 @@ if(isset($_GET['modo'])){
                 $chkMasculino = "checked";
             }
             $obs = $rsConsulta['obs'];
+            $nomeFoto = $rsConsulta['foto'];
+            $_SESSION['nomeFoto'] = $nomeFoto;
             $botao = "editar";
 
         }
@@ -261,6 +264,10 @@ if(isset($_GET['modo'])){
                             </div>
 
                         </div>
+                        FOTO:
+                        <div id="foto">
+                            <img src="bd/arquivos/<?=$nomeFoto?>" alt="foto">
+                        </div>
                         <div class="itens_formulario-botoes">
                             <input class="botao" type="submit" value="<?=$botao?>" name="btn-salvar">
                             <input type="submit" value=" Limpar" name="btn-limpar">
@@ -319,6 +326,13 @@ if(isset($_GET['modo'])){
                             <div class="campo-item"><?=$rsContatos['sigla']." - ".$rsContatos['descricao']?></div>
                         </div>
                         <div class="campo-tabela">
+                             <h4>Foto</h4>
+                            <div class="campo-item">
+                             <img src="bd/arquivos/<?=$rsContatos['foto']?>" alt="img">
+                                
+                            </div>
+                        </div>
+                        <div class="campo-tabela">
                              <h4>Opções</h4>
                             <div class="campo-item">
                                 <div> 
@@ -330,7 +344,7 @@ if(isset($_GET['modo'])){
                                     </a>
                                 </div>
                                 <div>
-                                    <a onclick="return confirm('Deseja realmente excluir esse registro')" href="bd/deletar.php?modo=excluir&codigo=<?=$rsContatos['codigo']?>">
+                                    <a onclick="return confirm('Deseja realmente excluir esse registro')" href="bd/deletar.php?modo=excluir&codigo=<?=$rsContatos['codigo']?>&nomeFoto=<?=$rsContatos['foto']?>">
                                         <img src="img/cancelar.png">
                                     </a>
                                 </div>

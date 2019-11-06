@@ -19,7 +19,7 @@ body{
 
 }
 .conteudo{
-    width: 1200px;
+    width: 1600px;
     height: inherit;
 }
 .center{
@@ -28,7 +28,7 @@ body{
 }
 .formulario{
     width: 500px;
-    height: inherit;
+    height: auto;
     box-shadow: 8px 8px 15px #999;
     padding-top: 2px;
     border: solid 1px #e3e3e3;
@@ -89,6 +89,11 @@ textarea{
     height: 110px;
     resize: none;
 }
+#foto{
+    width: 150px;
+    height: 150px;
+    background-color: #999;
+}
 .itens_formulario-botoes{
     height: 30px;
     padding-top: 3px;
@@ -99,11 +104,16 @@ textarea{
     margin-right: 50px;
 }
 .tabela{
-    width:1385px;
+    width:1610px;
     height: auto;
-    min-height: 150px;
+    min-height: 88px;
     box-shadow: 8px 8px 15px #999;
+    margin-bottom: 30px;
 
+}
+.tabela img {
+    width: 20px;
+    height: 20px;
 }
 .campo-tabela{
     width: 230px;
@@ -114,7 +124,7 @@ textarea{
 }
 .campo-linha{
     width: inherit;
-    height: inherit;
+    height: 88px;
 }
 .campo-item{
     width: inherit;

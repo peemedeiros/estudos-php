@@ -11,10 +11,14 @@ if(isset($_GET['modo'])){
         $conexao = conexaoMysql();
         
         $codigo=$_GET['codigo'];
+        $nomeFoto=$_GET['nomeFoto'];
         
         $sql = "delete from tblcontatos where codigo =".$codigo;
         
         if(mysqli_query($conexao, $sql)){
+
+            //apaga um arquivo
+            unlink('arquivos/'.$nomeFoto);
             header('location:../formulario.php');
         }
         else    
